@@ -1,0 +1,116 @@
+:root {
+    --body-gradient: radial-gradient(circle,rgb(127, 127, 127) 0%, rgb(34, 34, 34) 75%);;
+    --text-color: #f5f5f5;
+    --nav-background: #1e1e2f;
+    --nav-bottom-border: rgb(151, 0, 215);
+    --theme-border: #8b5cf6;
+    --theme-background: #5b21b6;
+    --selected-theme-background: #7c3aed;
+    --presentation-text-img-background: #1e1e2f;
+    --presentation-border: rgb(151, 0, 215);
+    --box-shadow: white;
+    --td-background-color: #2b2b35;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 98vw;
+    height: 98vh;
+    background: var(--body-gradient);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+}
+
+h3, h1 {
+    text-align: center;
+    text-shadow: -2px 2px 1px black;
+}
+
+tr {
+    margin: 20px 0px 20px 0px;
+}
+
+td {
+    text-align: center;
+    font-size: 40px;
+    width: 70px;
+    height: 70px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: var(--td-background-color);
+    transition: .2s ease-in-out;
+}
+
+td p {
+    margin: 0;
+    padding: 0;
+    text-shadow: -2px 2px 1px black;
+}
+
+input {
+    font-size: 40px;
+    margin-top: 30px;
+    width: 400px;
+    padding: 5px 10px;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+dialog {
+    font-size: 40px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-shadow: -3px 3px 1px black;
+    background-color: #ff3f3f;
+}
+
+#winner-text {
+    padding: 10px;
+    margin: 0px;
+}
+
+#show-hidden-word {
+    color: white;
+}
+
+#complement-player {
+    color: white;
+}
+
+button {
+    padding: 10px;
+    font-size: 35px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(172, 172, 172);
+}
+
+.guess-animation {
+    animation: guessed .2s ease-in-out forwards;
+}
+
+@keyframes guessed {
+    0% {
+        transform: rotate3d(0, 1, 0, 0deg);
+        filter: brightness(1.5);
+    }
+
+    50% {
+        transform: rotate3d(0, 1, 0, 90deg);
+        filter: brightness(1.2);
+    }
+
+    100% {
+        transform: rotate3d(0, 0, 0, 180deg);
+        filter: brightness(1);
+    }
+}
