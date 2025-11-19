@@ -117,7 +117,7 @@ const hiddenWordsArrays = {
         "JUEGUEZ", "LAVABAS", "LECTORA", "LENTEJA", "LIBRETA",
         "LLENADO", "MALETAS", "MANTESA", "MARTEZA", "MATERAS",
         "MINUTOS", "MONEDAS", "NOMBREZ", "NORMALA", "NOTABLE",
-        "NUMERAZ", "OBRERAZ", "OCULTAN", "PACIFIS", "PAQUETE"
+        "NUMERAR", "OBRERAZ", "OCULTAN", "PACIFIS", "PAQUETE"
         ]
 }
 
