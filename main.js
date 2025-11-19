@@ -1,3 +1,7 @@
+window.addEventListener("load", () => {
+    checkNumberColumns();
+});
+
 const rows = [
   document.querySelectorAll("#row-1 td"),
   document.querySelectorAll("#row-2 td"),
@@ -7,51 +11,211 @@ const rows = [
   document.querySelectorAll("#row-6 td")
 ];
 
-const hiddenWordsArray = [
-  "CAMINO", "PERDON", "CAMBIO", "PLANTA", "SOMBRA",
-  "CAMELA", "CADENA", "RATITA", "TOMATE", "LINAJE",
-  "CASARE", "CANTAN", "FRUTAS", "MADERA", "BARCOS",
-  "CUERPO", "COCINA", "LAGUNA", "MONTAR", "BANDAS",
-  "GATITO", "GASTAR", "PUERTA", "SUELOS", "PRENSA",
-  "SARTEN", "LLEGAR", "PUNTOS", "BANCOS", "CARGAR",
-  "CARGOS", "GALERA", "LATIDO", "RITMOS", "CURSOS",
-  "TORRES", "BOLSAS", "RAMERA", "ANTENA", "GANADO",
-  "FORMAS", "CANTOS", "RESTOS", "TENDER", "SABANA",
-  "TRAMPA", "BOICOT", "MODELO", "TALLER", "SEXUAL",
-  "PAYICO", "CHICHA", "PAYADA", "GITANO", "MARICA",
-  "FUEGOS", "PERROS", "FLORES", "LIBROS", "MESERO",
-  "CAMPOS", "VIEJOS", "CIELOS", "PUEBLO", "FUENTE",
-  "HERMAN", "SILLON", "VENTAS", "OFICIO", "PISTAS",
-  "SALIDA", "ENTRAR", "YEGUAS", "CENIZA", "BARATO",
-  "COMIDA", "BEBIDA", "FORTIN", "PONCHO", "SENORA",
-  "NAVAJA", "HOMBRE", "AMIGOS", "BOLSOS", "CUERNO",
-  "DINERO", "TIEMPO", "NOCHES", "SEMANA", "CIUDAD",
-  "JARDIN", "PARQUE", "AHOGAR", "PLAYAS", "MONTES",
-  "CAMION", "FOLIOS", "ACCESO", "FUERZA", "AEREOS"
-]
+const hiddenWordsArrays = {
+    "array3Letters" : [
+        "AJO", "ALA", "AMO", "ANO", "ASA",
+        "AVE", "AUN", "ESE", "BAL", "BAR",
+        "BUE", "BUS", "CAE", "CAL", "SOL",
+        "CAR", "OJO", "CON", "COZ", "RIO",
+        "CUY", "DAL", "DAR", "DEB", "DEL",
+        "DIZ", "DOS", "DUL", "ECO", "EJE",
+        "UNO", "ERA", "FIN", "ZOO",
+        "FUI", "TEL", "GIL", "GOL", "PAN",
+        "GUE", "GUS", "HAN", "HEZ",
+        "HIC", "TAL", "HOY", "HUY",
+        "IRA", "VER", "MOR", "LIM",
+        "TON", "JUA", "JUE", "RED", "SON",
+        "LAB", "LAI", "LAZ", "LEO", "LEY",
+        "LOA", "LUZ", "MAL", "MAS", "MIL",
+        "MIO", "MAR", "SAL", "NOC", "NOR",
+        "NOS", "OAS", "OLA", "OSA", "RÍO",
+        "PEZ", "PIE", "PIS", "POZ", "PRO",
+        "PUA", "QUE", "TÉN", "RAE", "REY"
+        ],
+    "array4Letters" : [
+        "AGUA", "AIRE", "ALTO", "ALMA", "AMAR",
+        "ANTE", "ARCO", "ARMA", "ARTE", "ASIA",
+        "AULA", "AZUL", "BAJO", "BALE", "BASE",
+        "BOCA", "BOLA", "CABE", "CALA", "CAFE",
+        "CAJA", "CAMA", "CANA", "CASA", "CASI",
+        "CAZA", "CELA", "CENA", "CERO", "CITA",
+        "CODA", "COPA", "CORO", "COSO", "CRUZ",
+        "CUAL", "CUBA", "CURA", "DAMA", "DADO",
+        "DEJA", "DELE", "DIAS", "DIJE", "DIME",
+        "TRES", "DUDA", "ECHO", "EDAD", "EJES",
+        "ELLA", "ELOS", "ERAS", "ESOS", "ESTA",
+        "FAMA", "FRIO", "JAKE", "FLOR", "FUER",
+        "GANA", "GATO", "GIRA", "GOLF", "GRAN",
+        "GRIS", "HACE", "HAYA", "HELA", "HILO",
+        "HOJA", "HOLA", "HORA", "IDAS", "IRAS",
+        "IRSE", "ISLA", "JUEZ", "JUNO", "LABO",
+        "LADO", "LAGO", "LEER", "LEVE", "LIGO",
+        "LIRA", "LISO", "LOBO", "LOCO", "LONA",
+        "LUGO", "LUJO", "LUNA", "MAIZ", "MALA"
+        ],
+    "array5Letters" : [
+        "ABRAZ", "ACERO", "ACTOR", "ADAPT", "AHORA",
+        "AGUAS", "ALBUM", "ALEGR", "ALTAR", "AMARE",
+        "AMIGO", "APOYO", "ARBOL", "ARENA", "ARTES",
+        "ATRAS", "AVION", "VERDE", "BAILE", "BANCO",
+        "BARCO", "BESOS", "BICHO", "BOCAS", "BOMBA",
+        "BROMA", "CALLE", "CAMPO", "CARTA", "CASAS",
+        "CAZAR", "CELDA", "CERCA", "CINES", "CIELO",
+        "CLARO", "CLIMA", "COCHE", "COMER", "COSAS",
+        "CREDO", "SALIR", "CUELA", "CURSO", "DANZA",
+        "DEJAR", "DICHA", "DIOSA", "DOLOR", "DONDE",
+        "DULCE", "ERROR", "ESTAR", "FALSO", "FAMAS",
+        "FAROL", "FIERA", "FINAL", "FIRME", "MORIR",
+        "FORMA", "FRASE", "FUEGO", "GANAR", "GENTE",
+        "GOLPE", "MARES", "GRITO", "GRUPO", "HABER",
+        "HIELO", "HIJOS", "HONOR", "IDEAS", "IGUAL",
+        "JUEGO", "JUNIO", "LABOR", "LADOS", "LAGOS",
+        "LECHE", "LEJOS", "LIBRO", "LUCES", "LUNAR",
+        "MADRE", "MAGIA", "MANOS", "MARCA", "MASAS",
+        "METRO", "MIEDO", "MITAD", "MODAS", "MONTE",
+        "MOVIL", "MUNDO", "NARIZ", "NOCHE", "NUEVO"
+        ],
+    "array6Letters" : [
+        "CAMINO", "PERDON", "CAMBIO", "PLANTA", "SOMBRA",
+        "CAMELA", "CADENA", "RATITA", "TOMATE", "LINAJE",
+        "CASARE", "CANTAN", "FRUTAS", "MADERA", "BARCOS",
+        "CUERPO", "COCINA", "LAGUNA", "MONTAR", "BANDAS",
+        "GATITO", "GASTAR", "PUERTA", "SUELOS", "PRENSA",
+        "SARTEN", "LLEGAR", "PUNTOS", "BANCOS", "CARGAR",
+        "CARGOS", "GALERA", "LATIDO", "RITMOS", "CURSOS",
+        "TORRES", "BOLSAS", "RAMERA", "ANTENA", "GANADO",
+        "FORMAS", "CANTOS", "RESTOS", "TENDER", "SABANA",
+        "TRAMPA", "BOICOT", "MODELO", "TALLER", "SEXUAL",
+        "PAYICO", "CHICHA", "PAYADA", "GITANO", "MARICA",
+        "FUEGOS", "PERROS", "FLORES", "LIBROS", "MESERO",
+        "CAMPOS", "VIEJOS", "CIELOS", "PUEBLO", "FUENTE",
+        "HERMAN", "SILLON", "VENTAS", "OFICIO", "PISTAS",
+        "SALIDA", "ENTRAR", "YEGUAS", "CENIZA", "BARATO",
+        "COMIDA", "BEBIDA", "FORTIN", "PONCHO", "SENORA",
+        "NAVAJA", "HOMBRE", "AMIGOS", "BOLSOS", "CUERNO",
+        "DINERO", "TIEMPO", "NOCHES", "SEMANA", "CIUDAD",
+        "JARDIN", "PARQUE", "AHOGAR", "PLAYAS", "MONTES",
+        "CAMION", "FOLIOS", "ACCESO", "FUERZA", "AEREOS"
+        ],
+    "array7Letters" : [
+        "ACEROLA", "ADOBADO", "AGARRAR", "ALABADO", "ALEROZA",
+        "ALETAZO", "AMARRAR", "APELADO", "ARROZAL", "ASEGURA",
+        "AVENIDA", "AZOTABA", "AZULEJO", "BAILADO", "BANDERA",
+        "BARREDA", "BARRERA", "BOTIQUE", "CABEZAS", "CAJONES",
+        "PALADAR", "CALLEJA", "CAMBIAR", "CAMPEON", "CANTABA",
+        "CAPOTEZ", "CARRETA", "CELAJEZ", "COBRADO", "COCINAS",
+        "COLEGAS", "COMPLEZ", "CORREOS", "CORTADO", "CORTESA",
+        "CREYERA", "CUIDADO", "DELICIA", "DEDALES", "DEFORMA",
+        "DESAYUN", "DESDEJA", "DESECHO", "DIAMETR", "DIGNIDA",
+        "DIVIDAN", "DULZURA", "ECOSIST", "ENFADAN", "ENTERAZ",
+        "ENTREGA", "ENVASEZ", "ENVIADO", "EQUIDAD", "ESCOBAS",
+        "ESTETAS", "EXTRAZA", "FACETAS", "FANALES", "FAMILIA",
+        "FAROLES", "FINALIZ", "FIRMEZA", "FLOJERA", "FORMULA",
+        "FRIALEZ", "GARRAFA", "GENERAZ", "GOLPEAR", "GUANTES",
+        "HABITAN", "HACEDOR", "HELADOS", "HORNEAZ", "HUMEDAD",
+        "IMAGINA", "IMPORTA", "INSUMOS", "INVENTO", "INVITAS",
+        "JUEGUEZ", "LAVABAS", "LECTORA", "LENTEJA", "LIBRETA",
+        "LLENADO", "MALETAS", "MANTESA", "MARTEZA", "MATERAS",
+        "MINUTOS", "MONEDAS", "NOMBREZ", "NORMALA", "NOTABLE",
+        "NUMERAZ", "OBRERAZ", "OCULTAN", "PACIFIS", "PAQUETE"
+        ]
+}
 
-let randomHiddenWord = Math.floor(Math.random() * hiddenWordsArray.length);
-
-let hiddenWord = hiddenWordsArray[randomHiddenWord];
 
 let inputWord = document.getElementById("input-word");
+let actualColumns = 6; //Numero actual de columnas
+let selectedHiddenWordsArray; //El array de letras seleccionado segun las columnas que hayan
+let randomHiddenWord; //El indice random del array seleccionado
+let hiddenWord = ""; //Palabra oculta
+
+function checkNumberColumns() {
+    selectedHiddenWordsArray = hiddenWordsArrays[`array${actualColumns}Letters`];
+
+    //Asigno la palabra oculta con el Math.random segun el array de palabras seleccionado
+    randomHiddenWord = Math.floor(Math.random() * selectedHiddenWordsArray.length);
+    hiddenWord = selectedHiddenWordsArray[randomHiddenWord];
+
+    inputWord.setAttribute("maxlength", actualColumns);
+
+    console.log(hiddenWord);
+}
+
+
+
+///////VARIABLES///////
+
 let winnerText = document.getElementById("winner-text");
 let winLoseDialog = document.getElementById("win-lose-dialog");
 let showHiddenWord = document.getElementById("show-hidden-word");
 let complementPlayer = document.getElementById("complement-player");
 let again = document.getElementById("again");
+let addColumn = document.getElementById("right-arrow");
+let removeColumn = document.getElementById("left-arrow");
+
+///////VARIABLES///////
 
 
-inputWord.addEventListener("keydown", writeWordLetters);
-again.addEventListener("mouseup", tryAgain);
+///////GLOBAL VARIABLES///////
 
 let step = -1;
-
+let correctLetters = 0;
 //Es otro step que usaré en validateWord(), simplemente porq si uso el "step" normal, despues de haberlo 
 //pasado por el setTimeout, peta el codigo
 let currentStep = 0;
 
-let correctLetters = 0;
+//let columnsAddedRemovedCount = 0;
+
+///////GLOBAL VARIABLES///////
+
+
+///////EVENTS///////
+
+inputWord.addEventListener("keydown", writeWordLetters);
+again.addEventListener("mouseup", tryAgain);
+addColumn.addEventListener("mouseup", function(e) {
+    if (actualColumns < 7) {
+        actualColumns++;
+        addRemoveColumns(e);
+    } 
+});
+
+removeColumn.addEventListener("mouseup", function(e) {
+    if (actualColumns > 3) {
+        actualColumns--;
+        addRemoveColumns(e);
+    }
+});
+
+///////EVENTS///////
+
+
+///////FUNCTIONS///////
+
+function addRemoveColumns(e) {
+
+    if (e.currentTarget.id === "right-arrow") {
+        const trParents = document.querySelectorAll("tr"); //Con esto saco los "tr" por separado, para añadirle como ultimo hijo el nuevo "td"
+        for (let i = 0; i < rows.length; i++) {
+            let newTd = document.createElement("td");
+            newTd.id = `row-${[i + 1]}-${actualColumns}`;
+            trParents[i].appendChild(newTd);
+        }
+        checkNumberColumns();
+    }
+
+    if (e.currentTarget.id === "left-arrow") {
+        for (let i = 0; i < rows.length; i++) {
+            const lastTd = rows[i][rows[i].length - 1]; //lastTd coge el ultimo td del tr seleccionado con [i]
+            lastTd.remove(); //Lo elimino
+        }
+        checkNumberColumns();
+    }
+
+    //Recalculo el tamaño de rows tras haber borrado/añadido columnas
+    for (let i = 0; i < rows.length; i++) {
+        rows[i] = document.querySelectorAll(`#row-${i + 1} td`);
+    }
+}
 
 function writeWordLetters(e) {
     if (e.key === "Enter") {
@@ -67,7 +231,7 @@ function writeWordLetters(e) {
 
                     //Lo meto aqui, para que una vez que se hayan pintado todas las letras y se hayan mostrado, sume el currentStep
                     //y valide todas las letras.
-                    if (i === 5) {
+                    if (i === hiddenWord.length - 1) {
                         currentStep++;
                         validateWord();
                     }
@@ -118,7 +282,7 @@ function paintLetters() {
 
 function validateWord() {
     
-    //Si correctLetters es = a 6 has ganado
+    //Si correctLetters es = a hiddenWord.length has ganado
     if (correctLetters === hiddenWord.length) {
         document.body.style.filter = "brightness(.2)";
         winLoseDialog.style.backgroundColor = "green";
@@ -128,8 +292,8 @@ function validateWord() {
         complementPlayer.innerHTML = "Eres el puto amo tío";
         winLoseDialog.showModal();
     
-    //Si correctLetters es != de y estamos en la fila 6, pierdes
-    } else if (correctLetters !== hiddenWord.length && currentStep === 6) {
+    //Si correctLetters es != de y estamos en la fila hiddenWord.length, pierdes
+    } else if (correctLetters !== hiddenWord.length && step === rows.length - 1) {
         document.body.style.filter = "brightness(.2)";
         winLoseDialog.style.backgroundColor = "#ff5858ff";
         winnerText.style.color = "red";
@@ -142,8 +306,8 @@ function validateWord() {
     inputWord.value = ""; //Reinicio el input para escribir
 }
 
-console.log(hiddenWord)
-
 function tryAgain() {
     window.location.href = "index.html"; //Boton que recarga la pagina para empezar de nuevo
 }
+
+///////FUNCTIONS///////

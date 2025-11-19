@@ -94,6 +94,22 @@ button:hover {
     background-color: rgb(172, 172, 172);
 }
 
+#arrows {
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+}
+
+svg {
+    width: 60px;
+    transition: .2s ease-in-out;
+}
+
+svg:hover {
+    cursor: pointer;
+    color: rgb(169, 169, 169);
+}
+
 .guess-animation {
     animation: guessed .2s ease-in-out forwards;
 }
