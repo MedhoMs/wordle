@@ -51,22 +51,25 @@ let step = -1;
 //pasado por el setTimeout, peta el codigo
 let currentStep = 0;
 
+let correctLetters = 0;
+
 function writeWordLetters(e) {
     if (e.key === "Enter") {
-        if (inputWord.value.length === 6) {
+        if (inputWord.value.length === hiddenWord.length) {
             //Convierto inputWord a mayus desde antes por que si no da un error de la hostia. VETE TU A SABER POR QUE
             const word = inputWord.value.toUpperCase();
             step++;
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < hiddenWord.length; i++) {
                 setTimeout(() => {
                     rows[step][i].innerHTML = word[i];
                     rows[step][i].classList.add("guess-animation");
-                    validateWord();
+                    paintLetters()
 
-                    //Lo meto aqui, para que una vez que se hayan validado todas las letras y se hayan pintado, lo sume, por que
-                    //si lo dejo en validateWord, lo suma 6 veces, por que llama a validateWord 6 veces.
+                    //Lo meto aqui, para que una vez que se hayan pintado todas las letras y se hayan mostrado, sume el currentStep
+                    //y valide todas las letras.
                     if (i === 5) {
                         currentStep++;
+                        validateWord();
                     }
 
                 }, 200 * i);
@@ -76,8 +79,10 @@ function writeWordLetters(e) {
 }
 
 
-function validateWord() {
-    let correctLetters = 0;
+//Esta funcion pinta las letras de los colores, y una vez que ya estan todas presentes, valido la palabra con "validateWord"
+function paintLetters() {
+
+    correctLetters = 0;
 
     //Detectar cuantas letras se repiten
     const letterCount = {};
@@ -87,52 +92,58 @@ function validateWord() {
     }
 
     //Primero valido las correctas, para quitarmelas de encima
-    for (let i = 0; i < 6; i++) {
-        if (rows[currentStep][i].innerHTML === hiddenWord[i]) {
-            rows[currentStep][i].style.backgroundColor = "green";
+    for (let i = 0; i < hiddenWord.length; i++) {
+        if (rows[step][i].innerHTML === hiddenWord[i]) {
+            rows[step][i].style.backgroundColor = "green";
             correctLetters++;
             //Esta letra la descuento del contador
             letterCount[hiddenWord[i]]--;
         }
     }
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < hiddenWord.length; i++) {
         
         //Proceso si no es verde y no está vacío
-        if (rows[currentStep][i].style.backgroundColor !== "green" && rows[currentStep][i].innerHTML !== "") {
+        if (rows[step][i].style.backgroundColor !== "green" && rows[step][i].innerHTML !== "") {
             //Si la letra existe en la palabra oculta y todavía hay disponibilidad
-            if (hiddenWord.includes(rows[currentStep][i].innerHTML) && letterCount[rows[currentStep][i].innerHTML] > 0) {
-                rows[currentStep][i].style.backgroundColor = "orange";
-                letterCount[rows[currentStep][i].innerHTML]--; //Descontarla del contador
+            if (hiddenWord.includes(rows[step][i].innerHTML) && letterCount[rows[step][i].innerHTML] > 0) {
+                rows[step][i].style.backgroundColor = "orange";
+                letterCount[rows[step][i].innerHTML]--; //Descontarla del contador
             } else {
-                rows[currentStep][i].style.backgroundColor = "#2b2b35";
+                rows[step][i].style.backgroundColor = "#2b2b35";
             }
         }
-
-        if (correctLetters === 6) {
-            document.body.style.filter = "brightness(.2)";
-            winLoseDialog.style.backgroundColor = "green";
-            winnerText.style.color = "#71ff71";
-            winnerText.innerHTML = "Has ganao tete";
-            showHiddenWord.innerHTML = `La palabra correcta era: ${hiddenWord}`;
-            complementPlayer.innerHTML = "Eres el puto amo tío";
-            winLoseDialog.showModal();
-        }
-
-        if (step === 5) {
-            document.body.style.filter = "brightness(.2)";
-            winLoseDialog.style.backgroundColor = "#ff5858ff";
-            winnerText.style.color = "red";
-            winnerText.innerHTML = "Has perdido, maldito pringado";
-            showHiddenWord.innerHTML = `La palabra correcta era: ${hiddenWord}`;
-            complementPlayer.innerHTML = "Eres un fracasado";
-            winLoseDialog.showModal();
-        }
     }
-
-    inputWord.value = "";
 }
 
+function validateWord() {
+    
+    //Si correctLetters es = a 6 has ganado
+    if (correctLetters === hiddenWord.length) {
+        document.body.style.filter = "brightness(.2)";
+        winLoseDialog.style.backgroundColor = "green";
+        winnerText.style.color = "#71ff71";
+        winnerText.innerHTML = "Has ganao tete";
+        showHiddenWord.innerHTML = `La palabra correcta era: ${hiddenWord}`;
+        complementPlayer.innerHTML = "Eres el puto amo tío";
+        winLoseDialog.showModal();
+    
+    //Si correctLetters es != de y estamos en la fila 6, pierdes
+    } else if (correctLetters !== hiddenWord.length && currentStep === 6) {
+        document.body.style.filter = "brightness(.2)";
+        winLoseDialog.style.backgroundColor = "#ff5858ff";
+        winnerText.style.color = "red";
+        winnerText.innerHTML = "Has perdido, maldito pringado";
+        showHiddenWord.innerHTML = `La palabra correcta era: ${hiddenWord}`;
+        complementPlayer.innerHTML = "Eres un fracasado";
+        winLoseDialog.showModal();
+    }
+
+    inputWord.value = ""; //Reinicio el input para escribir
+}
+
+console.log(hiddenWord)
+
 function tryAgain() {
-    window.location.href = "index.html";
+    window.location.href = "index.html"; //Boton que recarga la pagina para empezar de nuevo
 }
