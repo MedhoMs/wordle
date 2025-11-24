@@ -219,6 +219,9 @@ function addRemoveColumns(e) {
 
 function writeWordLetters(e) {
     if (e.key === "Enter") {
+        //Primero que todo, quitamos los pointer events de las flechas para que una vez que hayan empezado, no puedan añadir o quitar columnas
+        addColumn.style.pointerEvents = "none";
+        removeColumn.style.pointerEvents = "none";
         if (inputWord.value.length === hiddenWord.length) {
             //Convierto inputWord a mayus desde antes por que si no da un error de la hostia. VETE TU A SABER POR QUE
             const word = inputWord.value.toUpperCase();
@@ -307,6 +310,8 @@ function validateWord() {
 }
 
 function tryAgain() {
+    addColumn.style.pointerEvents = "all";
+    removeColumn.style.pointerEvents = "all";
     window.location.href = "index.html"; //Boton que recarga la pagina para empezar de nuevo
 }
 
